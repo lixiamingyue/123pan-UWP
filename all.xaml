@@ -1,0 +1,118 @@
+﻿<Page
+    x:Class="_123云盘UWP.all"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:_123云盘UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d">
+
+    <Grid>
+        <muxc:ProgressRing IsActive="True" x:Name="jindu" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <ContentDialog x:Name="termsOfUseContentDialog"
+           PrimaryButtonText= "取消"
+           CloseButtonText="下载">
+            <ContentDialog.TitleTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="下载"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ContentDialog.TitleTemplate>
+            <StackPanel>
+                <HyperlinkButton Content="选择文件路径" Click="HyperlinkButton_Click" x:Name="xvan"/>
+            </StackPanel>
+        </ContentDialog>
+        <ContentDialog x:Name="termsOfUseContentDialog1"
+   IsSecondaryButtonEnabled="False"
+   PrimaryButtonText= "取消"
+   SecondaryButtonText="新建">
+            <ContentDialog.TitleTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="新建文件夹"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ContentDialog.TitleTemplate>
+            <StackPanel>
+                <TextBox
+                    PlaceholderText="请输入文件夹名称"
+                    TextChanged="InputTextBox_TextChanged"
+                    x:Name="InputTextBox"/>
+            </StackPanel>
+        </ContentDialog>
+        <Button Style="{StaticResource AccentButtonStyle}" 
+            Content="上传"  Background="#FF597DFC"
+             Margin="28,5" VerticalAlignment="Top" Width="71" x:Name="shang">
+
+            <Button.Flyout>
+                <Flyout Placement="Bottom">
+                    <StackPanel Orientation="Vertical" Width="150">
+                        <Button x:Name="BtnUploadFile"
+                                Click="BtnUploadFile_Click"
+                                Content="上传文件"
+                                Padding="10,5"
+                                Width="120"/>
+                        <Button x:Name="BtnUploadFolder"
+                                Click="BtnUploadFolder_Click"
+                                Content="上传文件夹"
+                                Padding="10,5"
+                                Width="120"/>
+                    </StackPanel>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
+        <Button Content="下载" Margin="28,5,0,0" Visibility="Collapsed"
+VerticalAlignment="Top" Width="71" x:Name="Down" Click="down_Click" />
+        <Button Content="删除" Margin="103,5,0,0" Visibility="Collapsed"
+VerticalAlignment="Top" Width="71" x:Name="sc" Click="sc_Click" />
+        <Button Content="新建" Margin="103,5" Width="71"
+HorizontalAlignment="Left"
+VerticalAlignment="Top" x:Name="add" Click="add_Click"/>
+        <Button Content="离线下载" Margin="178,5" Width="85" IsEnabled="False"
+HorizontalAlignment="Left"
+VerticalAlignment="Top" x:Name="nodown"/>
+
+        <muxc:BreadcrumbBar x:Name="BreadcrumbBar"  Margin="27,40,0,0"
+                    ItemClicked="BreadcrumbBar_ItemClicked">
+            <muxc:BreadcrumbBar.ItemTemplate>
+                <DataTemplate x:DataType="local:Folder">
+                    <muxc:BreadcrumbBarItem Content="{Binding}" AutomationProperties.Name="{Binding Name}">
+                        <muxc:BreadcrumbBarItem.ContentTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </muxc:BreadcrumbBarItem.ContentTemplate>
+                    </muxc:BreadcrumbBarItem>
+                </DataTemplate>
+            </muxc:BreadcrumbBar.ItemTemplate>
+        </muxc:BreadcrumbBar>
+        <ListView x:Name="FileListView" IsItemClickEnabled="True"
+          ItemClick="FileListView_ItemClick" Margin="0,60,0,0" DoubleTapped="FileListView_DoubleTapped">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:FileInfoModel">
+                    <Grid Padding="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0"
+                            Width="32" Height="32" Source="{x:Bind IconPath}"
+                       Stretch="Uniform"/>
+                        <TextBlock Grid.Column="1" 
+                           Text="{x:Bind FileName}" 
+                           FontWeight="Bold" 
+                           VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" 
+                           Text="{x:Bind FileDate}" 
+                           HorizontalAlignment="Right" 
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>

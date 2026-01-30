@@ -1,0 +1,52 @@
+﻿<Page
+    x:Class="_123云盘UWP.hsz"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:_123云盘UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d">
+
+    <Grid>
+        <muxc:InfoBar
+    IsOpen="True"
+    Title="提示"
+    IsClosable="False"
+    Message="不支持查看在被删除前非根目录的文件（夹），非常抱歉" Margin="28,5,10,-5" >
+        </muxc:InfoBar>
+        <muxc:ProgressRing IsActive="True" x:Name="jindu"/>
+        <Button Style="{StaticResource AccentButtonStyle}" Content="清空回收站" Margin="28,60,0,0"
+        VerticalAlignment="Top" Background="#FF597DFC" Width="97" x:Name="qk" IsEnabled="False"/>
+        <Button Content="删除" Margin="28,60,0,0" Visibility="Collapsed"
+VerticalAlignment="Top" Width="97" x:Name="sc" Click="sc_Click"/>
+        <Button Content="还原" Margin="128,60,0,0" Visibility="Collapsed"
+VerticalAlignment="Top" Width="97" x:Name="hy" Click="hy_Click"/>
+        <ListView x:Name="FileListView" IsItemClickEnabled="True"
+          ItemClick="FileListView_ItemClick" Margin="0,100,0,0" DoubleTapped="FileListView_DoubleTapped">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:FileInfoModel">
+                    <Grid Padding="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0"
+                            Width="32" Height="32" Source="{x:Bind IconPath}"
+                       Stretch="Uniform"/>
+                        <TextBlock Grid.Column="1" 
+                           Text="{x:Bind FileName}" 
+                           FontWeight="Bold" 
+                           VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" 
+                           Text="{x:Bind FileDate}" 
+                           HorizontalAlignment="Right" 
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>
